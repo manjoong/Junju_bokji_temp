@@ -88,7 +88,7 @@ public class WelfareSearch extends Activity {
             XmlPullParser xpp= factory.newPullParser();
             xpp.setInput( new InputStreamReader(is, "UTF-8") ); //inputstream 으로부터 xml 입력받기
 
-            String tag;
+            String tag;//
 
             xpp.next();
             int eventType= xpp.getEventType();
