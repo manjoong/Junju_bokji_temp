@@ -22,8 +22,8 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        Button btnImageSearch = (Button) findViewById(R.id.btnServiceSearch);
-        btnImageSearch.setOnClickListener(new View.OnClickListener() {
+        Button btnServiceSearch = (Button) findViewById(R.id.btnServiceSearch);
+        btnServiceSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(getApplicationContext(), WelfareSearch.class);
@@ -31,8 +31,17 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-        Button btnKeySearch = (Button) findViewById(R.id.btnFacilitySearch);
-        btnKeySearch.setOnClickListener(new View.OnClickListener() {
+        Button btnFreeEat = (Button) findViewById(R.id.btnFreeEat);
+        btnFreeEat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(getApplicationContext(), FreeEat.class);
+                startActivity(myIntent);
+            }
+        });
+
+        Button btnFacilitySearch = (Button) findViewById(R.id.btnFacilitySearch);
+        btnFacilitySearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(getApplicationContext(), WelfareFacilitySearch.class);
