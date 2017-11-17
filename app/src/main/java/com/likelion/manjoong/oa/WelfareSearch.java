@@ -103,12 +103,7 @@ public class WelfareSearch extends Activity {
                         tag= xpp.getName();//테그 이름 얻어오기
 
                         if(tag.equals("list")) ;// 첫번째 검색결과
-                        else if(tag.equals("welFareChargeNm")){
-                            buffer.append("담당자명 : ");
-                            xpp.next();
-                            buffer.append(xpp.getText());//list 요소의 TEXT 읽어와서 문자열버퍼에 추가
-                            buffer.append("\n"); //줄바꿈 문자 추가
-                        }
+
                         else if(tag.equals("welFareChargeTel")){
                             buffer.append("기관 전화번호 : ");
                             xpp.next();
@@ -137,7 +132,7 @@ public class WelfareSearch extends Activity {
                             buffer.append("안내사항 :");
                             xpp.next();
                             buffer.append(xpp.getText());// 요소의 TEXT 읽어와서 문자열버퍼에 추가
-                            buffer.append("  ,  "); //줄바꿈 문자 추가
+                            buffer.append("\n"); //줄바꿈 문자 추가
                         }
                         else if(tag.equals("welFareHavePaper")){
                             buffer.append("구비서류 :");
