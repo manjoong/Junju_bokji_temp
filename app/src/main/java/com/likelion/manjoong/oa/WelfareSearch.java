@@ -188,6 +188,8 @@ public class WelfareSearch extends Activity {
     String getXmlData(){
 
         StringBuffer buffer=new StringBuffer();
+        StringBuffer title=new StringBuffer();
+
 
 
         String search = URLEncoder.encode(str);//한글의 경우 인식이 안되기에 utf-8 방식으로 encoding..
@@ -211,6 +213,7 @@ public class WelfareSearch extends Activity {
             int eventType= xpp.getEventType();
 
             while( eventType != XmlPullParser.END_DOCUMENT ){
+
                 switch( eventType ){
                     case XmlPullParser.START_DOCUMENT:
                         buffer.append("파싱 시작...\n\n");
@@ -219,13 +222,8 @@ public class WelfareSearch extends Activity {
                     case XmlPullParser.START_TAG:
                         tag= xpp.getName();//테그 이름 얻어오기
 
-                        if(tag.equals("list")) ;// 첫번째 검색결과
-                        else if(tag.equals("welFareName")){
-                            buffer.append("복지명 :");
-                            xpp.next();
-                            buffer.append(xpp.getText());// 요소의 TEXT 읽어와서 문자열버퍼에 추가
-                            buffer.append("\n"); //줄바꿈 문자 추가
-                        }
+                        if(tag.equals("list"))
+                            buffer.setLength(0);// 첫번째 검색결과
                         else if(tag.equals("welFareChargeTel")){
                             buffer.append("기관 전화번호 : ");
                             xpp.next();
@@ -233,82 +231,67 @@ public class WelfareSearch extends Activity {
                             buffer.append("\n");//줄바꿈 문자 추가
                         }
                         else if(tag.equals("welFareContent")){
-                            buffer.append("복지내용 :");
+                            buffer.append(";;복지내용 :");
                             xpp.next();
                             buffer.append(xpp.getText());// 요소의 TEXT 읽어와서 문자열버퍼에 추가
                             buffer.append("\n");//줄바꿈 문자 추가
                         }
                         else if(tag.equals("welFareDepartment")){
-                            buffer.append("담당기관 :");
+                            buffer.append(";;담당기관 :");
                             xpp.next();
                             buffer.append(xpp.getText());// 요소의 TEXT 읽어와서 문자열버퍼에 추가
                             buffer.append("\n");//줄바꿈 문자 추가
                         }
                         else if(tag.equals("welFareDispauper")){
-                            buffer.append("수혜 대상 :");
+                            buffer.append(";;수혜 대상 :");
                             xpp.next();
                             buffer.append(xpp.getText());// 요소의 TEXT 읽어와서 문자열버퍼에 추가
                             buffer.append("\n");//줄바꿈 문자 추가
                         }
                         else if(tag.equals("welFareGuideMemo")){
-                            buffer.append("안내사항 :");
+                            buffer.append(";;안내사항 :");
                             xpp.next();
                             buffer.append(xpp.getText());// 요소의 TEXT 읽어와서 문자열버퍼에 추가
-                            buffer.append("\n"); //줄바꿈 문자 추가
-                        }
-                        else if(tag.equals("welFareHavePaper")){
-                            buffer.append("구비서류 :");
-                            xpp.next();
-                            buffer.append(xpp.getText());// 요소의 TEXT 읽어와서 문자열버퍼에 추가
-                            buffer.append("\n"); //줄바꿈 문자 추가
-                        }
-                        else if(tag.equals("welFareHowApplication")){
-                            buffer.append("신청방식 :");
-                            xpp.next();
-                            buffer.append(xpp.getText());//요소의 TEXT 읽어와서 문자열버퍼에 추가
                             buffer.append("\n"); //줄바꿈 문자 추가
                         }
                         else if(tag.equals("welFareHowSupported")){
-                            buffer.append("지원방법 :");
-                            xpp.next();
-                            buffer.append(xpp.getText());// 요소의 TEXT 읽어와서 문자열버퍼에 추가
-                            buffer.append("\n"); //줄바꿈 문자 추가
-                        }
-                        else if(tag.equals("welFareIsApplication")){
-                            buffer.append("신청서 작성여부 :");
+                            buffer.append(";;지원방법 :");
                             xpp.next();
                             buffer.append(xpp.getText());// 요소의 TEXT 읽어와서 문자열버퍼에 추가
                             buffer.append("\n"); //줄바꿈 문자 추가
                         }
                         else if(tag.equals("welFareLicense")){
-                            buffer.append("자격요건 :");
+                            buffer.append(";;자격요건 :");
                             xpp.next();
                             buffer.append(xpp.getText());// 요소의 TEXT 읽어와서 문자열버퍼에 추가
                             buffer.append("\n"); //줄바꿈 문자 추가
                         }
                         else if(tag.equals("welFareLifeCycleSort")){
-                            buffer.append("대상분류 :");
+                            buffer.append(";;대상분류 :");
                             xpp.next();
                             buffer.append(xpp.getText());// 요소의 TEXT 읽어와서 문자열버퍼에 추가
                             buffer.append("\n"); //줄바꿈 문자 추가
                         }
-                        else if(tag.equals("welFarePurpose")){
-                            buffer.append("복지목적 :");
+                        else if(tag.equals("welFareName")){
+                            buffer.append(";;복지명 :");
                             xpp.next();
-                            buffer.append(xpp.getText());//요소의 TEXT 읽어와서 문자열버퍼에 추가
+                            buffer.append(xpp.getText());// 요소의 TEXT 읽어와서 문자열버퍼에 추가
                             buffer.append("\n"); //줄바꿈 문자 추가
                         }
-                        else if(tag.equals("welFareSid")){
-                            buffer.append("번호 :");
+
+                        else if(tag.equals("welFarePurpose")){
+                            buffer.append(";;복지목적 :");
                             xpp.next();
                             buffer.append(xpp.getText());//요소의 TEXT 읽어와서 문자열버퍼에 추가
                             buffer.append("\n"); //줄바꿈 문자 추가
                         }
                         else if(tag.equals("welFareStyleSort")){
-                            buffer.append("수혜자 유형 :");
+                            buffer.append(";;수혜자 유형 :");
                             xpp.next();
                             buffer.append(xpp.getText());// 요소의 TEXT 읽어와서 문자열버퍼에 추가
                             buffer.append("\n"); //줄바꿈 문자 추가
+                            String arr[] = buffer.toString().split(";;");
+                            title.append(arr[8].toString()+"\n");
                         }
                         break;
 
@@ -317,12 +300,14 @@ public class WelfareSearch extends Activity {
 
                     case XmlPullParser.END_TAG:
                         tag= xpp.getName(); //테그 이름 얻어오기
+                        if(tag.equals("list"))
 
-                        if(tag.equals("list")) buffer.append("\n");// 첫번째 검색결과종료..줄바꿈
+                            buffer.append("\n");// 첫번째 검색결과종료..줄바꿈
 
                         break;
                 }
-
+//                  String arr[] = buffer.toString().split(";;");
+//                title.append(arr[1].toString());
                 eventType= xpp.next();
             }
 
@@ -330,9 +315,10 @@ public class WelfareSearch extends Activity {
             // TODO Auto-generated catch blocke.printStackTrace();
         }
 
-        buffer.append("파싱 끝\n");
+//        buffer.append("파싱 끝\n");
 
-        return buffer.toString();//StringBuffer 문자열 객체 반환
+
+        return title.toString();//StringBuffer 문자열 객체 반환
 
     }//getXmlData method....
 
