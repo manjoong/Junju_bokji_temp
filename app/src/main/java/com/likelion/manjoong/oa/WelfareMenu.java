@@ -15,28 +15,36 @@ import android.widget.Button;
  *   지금은 버튼을 클릭하면 다음 액티비티로 화면을 전환하고, 그 액티비티에서 검색을 하는 것으로 구현됨.
  */
 
-public class MenuActivity extends AppCompatActivity {
+public class WelfareMenu extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu);
+        setContentView(R.layout.activity_welfare_menu);
 
-
-        Button btnFreeEat = (Button) findViewById(R.id.btnWelfare);
-        btnFreeEat.setOnClickListener(new View.OnClickListener() {
+        Button btnServiceSearch = (Button) findViewById(R.id.btnServiceSearch);
+        btnServiceSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(getApplicationContext(), WelfareMenu.class);
+                Intent myIntent = new Intent(getApplicationContext(), WelfareSearch.class);
                 startActivity(myIntent);
             }
         });
 
-        Button btnFacilitySearch = (Button) findViewById(R.id.btnEduConv);
+        Button btnFreeEat = (Button) findViewById(R.id.btnFreeEat);
+        btnFreeEat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(getApplicationContext(), FreeEat.class);
+                startActivity(myIntent);
+            }
+        });
+
+        Button btnFacilitySearch = (Button) findViewById(R.id.btnFacilitySearch);
         btnFacilitySearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(getApplicationContext(), ConvMenu.class);
+                Intent myIntent = new Intent(getApplicationContext(), WelfareFacilitySearch.class);
                 startActivity(myIntent);
             }
         });

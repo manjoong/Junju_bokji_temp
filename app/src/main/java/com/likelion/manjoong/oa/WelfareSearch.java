@@ -224,13 +224,13 @@ public class WelfareSearch extends Activity {
         final String title[]=arr[0].split("복지명 :");
         final String phone[]=arr[1].split("기관 전화번호 :");
         final String target[]=arr[2].split("수혜 대상 :");
-        final String content[]=arr[3].split("복지 내용 :");
+        final String content[]=arr[3].split("복지내용 :");
         int size=title.length;
         adapter = new resAdapter(storage,this);
         String[] menu = {"123","123","123"};
 
         for(int i =1;i<size;i++){
-            storage.add(new restaurant(title[i], phone[i], target[i], "11111", menu, 1));
+            storage.add(new restaurant(title[i], phone[i], target[i], "11111", content[i], 1));
         }
         listview.setAdapter(adapter);
 

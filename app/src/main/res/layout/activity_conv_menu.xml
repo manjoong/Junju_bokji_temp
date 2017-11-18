@@ -12,10 +12,10 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/btnWelfare"
+            android:id="@+id/btnPolice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="복지 서비스"
+            android:text="지구대 위치"
             android:textSize="24dp"
             android:textStyle="bold"/>
 
@@ -29,10 +29,10 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/btnEduConv"
+            android:id="@+id/btnPeopleless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="교육. 편의"
+            android:text="무인 민원 발급 정보"
             android:textSize="24dp"
             android:textStyle="bold"/>
 
@@ -45,7 +45,6 @@
         android:orientation="vertical">
 
     </LinearLayout>
-
 
 
 </LinearLayout>
