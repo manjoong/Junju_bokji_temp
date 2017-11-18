@@ -1,10 +1,13 @@
 package com.likelion.manjoong.oa;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -14,11 +17,19 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 
 public class WelfareSearch extends Activity {
+    ////////////////리스트뷰 구현////////////....
+    ListView listview;
+    resAdapter adapter;
+    int Addition = 1;
+    ArrayList<restaurant> storage = new ArrayList<>();
+    ///////////////////////////////////////////////
 
     EditText edit;
     TextView text;
+    boolean first= true;
 
     XmlPullParser xpp;
     String key="8rULtNWhTcB9%2FM2fsJHpyZqt%2FK94LqQWfNl9QTmvLKP56PotRCl8iO2yOaYnxffLg7nG8qHsMPLIijmqenTyrg%3D%3D";
@@ -28,6 +39,7 @@ public class WelfareSearch extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTitle("맞춤 복지");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welfare_search);
         LinearLayout woman = (LinearLayout)findViewById(R.id.woman);
@@ -35,7 +47,7 @@ public class WelfareSearch extends Activity {
         LinearLayout oldman = (LinearLayout)findViewById(R.id.oldman);
         LinearLayout studen = (LinearLayout)findViewById(R.id.student);
         LinearLayout handicapped = (LinearLayout)findViewById(R.id.handicapped);
-        text= (TextView)findViewById(R.id.result); //보여줄 창 선언
+//        text= (TextView)findViewById(R.id.result); //보여줄 창 선언
 
         woman.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,12 +55,10 @@ public class WelfareSearch extends Activity {
                 str = "여성";
                 //Android 4.0 이상 부터는 네트워크를 이용할 때 반드시 Thread 사용해야 함
                 new Thread(new Runnable() {
-
                     @Override
                     public void run() {
                         // TODO Auto-generated method stub
                         data= getXmlData();//아래 메소드를 호출하여 XML data를 파싱해서 String 객체로 얻어오기
-
                         //UI Thread(Main Thread)를 제외한 어떤 Thread도 화면을 변경할 수 없기때문에
                         //runOnUiThread()를 이용하여 UI Thread가 TextView 글씨 변경하도록 함
                         runOnUiThread(new Runnable() {
@@ -56,16 +66,22 @@ public class WelfareSearch extends Activity {
                             @Override
                             public void run() {
                                 // TODO Auto-generated method stub
-                                text.setText(data); //TextView에 문자열  data 출력
+                                if(first){
+                                init();
+                                    first = false;}else{
+                                    init();
+                                    reload();
+                                }
+
+//                                text.setText(arr[1].toString()); //TextView에 문자열  data 출력
                             }
                         });
-
                     }
                 }).start();
-
-
             }
         });
+
+
 
         child.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,13 +102,18 @@ public class WelfareSearch extends Activity {
                             @Override
                             public void run() {
                                 // TODO Auto-generated method stub
-                                text.setText(data); //TextView에 문자열  data 출력
+                                if(first){
+                                    init();
+                                    first = false;}else{
+                                    init();
+                                    reload();
+                                }
+//                                text.setText(data); //TextView에 문자열  data 출력
                             }
                         });
 
                     }
                 }).start();
-
             }
         });
         oldman.setOnClickListener(new View.OnClickListener() {
@@ -114,13 +135,18 @@ public class WelfareSearch extends Activity {
                             @Override
                             public void run() {
                                 // TODO Auto-generated method stub
-                                text.setText(data); //TextView에 문자열  data 출력
+                                if(first){
+                                    init();
+                                    first = false;}else{
+                                    init();
+                                    reload();
+                                }
+//                                text.setText(data); //TextView에 문자열  data 출력
                             }
                         });
 
                     }
                 }).start();
-
             }
         });
         studen.setOnClickListener(new View.OnClickListener() {
@@ -142,13 +168,18 @@ public class WelfareSearch extends Activity {
                             @Override
                             public void run() {
                                 // TODO Auto-generated method stub
-                                text.setText(data); //TextView에 문자열  data 출력
+                                if(first){
+                                    init();
+                                    first = false;}else{
+                                    init();
+                                    reload();
+                                }
+//                                text.setText(data); //TextView에 문자열  data 출력
                             }
                         });
 
                     }
                 }).start();
-
             }
         });
         handicapped.setOnClickListener(new View.OnClickListener() {
@@ -170,17 +201,81 @@ public class WelfareSearch extends Activity {
                             @Override
                             public void run() {
                                 // TODO Auto-generated method stub
-                                text.setText(data); //TextView에 문자열  data 출력
+                                if(first){
+                                    init();
+                                    first = false;}else{
+                                    init();
+                                    reload();
+                                }
+//                                text.setText(data); //TextView에 문자열  data 출력
                             }
                         });
 
                     }
                 }).start();
+            }
 
+        });
+    }
+    void init(){
+
+        listview = (ListView)findViewById(R.id.listview);
+        final String arr[] = data.split("###");
+        final String title[]=arr[0].split("복지명 :");
+        final String phone[]=arr[1].split("기관 전화번호 :");
+        final String target[]=arr[2].split("수혜 대상 :");
+        final String content[]=arr[3].split("복지 내용 :");
+        int size=title.length;
+        adapter = new resAdapter(storage,this);
+        String[] menu = {"123","123","123"};
+
+        for(int i =1;i<size;i++){
+            storage.add(new restaurant(title[i], phone[i], target[i], "11111", menu, 1));
+        }
+        listview.setAdapter(adapter);
+
+
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(WelfareSearch.this, Main3Activity.class);
+
+                intent.putExtra("restaurant", storage.get(i));
+
+                startActivity(intent);
             }
         });
 
     }
+
+    void reload(){
+
+        listview = (ListView)findViewById(R.id.listview);
+        final String arr[] = data.split("복지명 :");
+        int size=arr.length;
+        adapter = new resAdapter(storage,this);
+        for(int i =1;i<size;i++){
+            storage.remove(0);
+        }
+        listview.setAdapter(adapter);
+
+
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(WelfareSearch.this, Main3Activity.class);
+
+                intent.putExtra("restaurant", storage.get(i));
+
+                startActivity(intent);
+            }
+        });
+
+
+    }
+
 
 
 
@@ -189,6 +284,12 @@ public class WelfareSearch extends Activity {
 
         StringBuffer buffer=new StringBuffer();
         StringBuffer title=new StringBuffer();
+        StringBuffer phone=new StringBuffer();
+        StringBuffer content=new StringBuffer();
+        StringBuffer memo=new StringBuffer();
+        StringBuffer target=new StringBuffer();
+        StringBuffer purpose=new StringBuffer();
+        StringBuffer submit=new StringBuffer();
 
 
 
@@ -290,8 +391,15 @@ public class WelfareSearch extends Activity {
                             xpp.next();
                             buffer.append(xpp.getText());// 요소의 TEXT 읽어와서 문자열버퍼에 추가
                             buffer.append("\n"); //줄바꿈 문자 추가
+                            ///////////////title따오기////////////////
                             String arr[] = buffer.toString().split(";;");
-                            title.append(arr[8].toString()+"\n");
+                            title.append(arr[8].toString());
+                            ///////////////phone 따오기//////////////////
+                            phone.append(arr[0].toString());
+                            ///////////////phone 따오기//////////////////
+                            target.append(arr[3].toString());
+                            ///////////////content 따오기//////////////////
+                            content.append(arr[1].toString());
                         }
                         break;
 
@@ -318,7 +426,7 @@ public class WelfareSearch extends Activity {
 //        buffer.append("파싱 끝\n");
 
 
-        return title.toString();//StringBuffer 문자열 객체 반환
+        return title.toString()+"###"+phone.toString()+"###"+target.toString()+"###"+content.toString();//StringBuffer 문자열 객체 반환
 
     }//getXmlData method....
 
