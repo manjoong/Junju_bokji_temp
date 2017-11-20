@@ -11,7 +11,7 @@ import android.widget.TextView;
 public class Main3Activity extends AppCompatActivity {
     TextView txtname, etmenu1;
     TextView tvTel, tvURL;
-    ImageView imageView2;
+    ImageView imageView2;//
 
 
     @Override
